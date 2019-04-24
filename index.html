@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTML Curso wm</title>
+
+</head>
+<body>
+    <header>
+        <h1>Exercícios HTML</h1>
+    </header>
+
+    <nav>
+        <a href redireciona-site="exercicios/teste.html"> Aula 169 - Estruturando os Exers</a> <!-- deixei o href para poder ter a marcação de link -->
+    </nav>
+
+    <section id="conteudo">  </section>
+    
+    <footer>
+
+    </footer>
+
+    <script>
+    document.querySelectorAll('[redireciona-site]').forEach( (link) => { //coloquei o parametro chamado de "link" porque sei que o querySelectorAll com o atributo redireciona-site só irá me retornar links ( ou <a>, porque eu defini que esses atributos só estão presentes nos <a>)
+        const conteudo = document.getElementById('conteudo') //selecionei o local onde irei colocar os conteúdos, que será na section que tem o if conteudo
+
+        link.onclick = function(e) { //
+            e.preventDefault() //cancelar o comportamento natural do elemento, que seria o de redirecionamento para o href. Porém como ainda estamoa na função posso implementar outra funcionalidade que será a de redirecionamento por requisição AJAX com o fetch
+            fetch(link.getAttribute('redireciona-site'))
+            
+            .then( (response) =>{ //fetch é uma função baseada em romisse. É uma requisição AJAX   estrutura: fetch(URL_TO_FETCH, { method: 'get' // opcional }) .then(function(response) { // use a resposta }) .catch(function(err) { console.error(err); });
+                return response.text() // esse .text() É UMA FUNÇÃO. serve pra pegar o conteúdo html da página que foi feita a requisição. Ok peguei o conteúdo html, mas e agr? tenho que jogar no campo <section> com o atributo redireciona-site
+            })
+            .then( (htmlXYZ) => {
+                return conteudo.innerHTML = htmlXYZ //o htmlXYZ é o return da função then anterior (a que tem o atributo função) 
+            })
+
+
+        }
+    })        
+    </script>
+</body>
+</html>
